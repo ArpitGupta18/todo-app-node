@@ -3,6 +3,7 @@ const {
 	getTodos,
 	createTodo,
 	deleteTodo,
+	toggleTodo,
 } = require("../controllers/todoController.js");
 
 const router = express.Router();
@@ -27,4 +28,15 @@ router.delete("/:id", async (req, res) => {
 		res.status(404).send({ Error: "TodoNot Found" });
 	}
 });
+
+router.patch("/toggle/:id", async (req, res) => {
+	const { id } = req.params;
+	const toggledTodo = await toggleTodo(id);
+	if (toggledTodo) {
+		res.status(200).json({ message: "Todo toggled successfully" });
+	} else {
+		res.status(404).send({ Error: "Todo Not Found" });
+	}
+});
+
 module.exports = router;

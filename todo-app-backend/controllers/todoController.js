@@ -46,4 +46,18 @@ const deleteTodo = async (id) => {
 	}
 };
 
-module.exports = { getTodos, createTodo, deleteTodo };
+const toggleTodo = async (id) => {
+	const todos = await getTodos();
+	const index = todos.findIndex((todo) => todo.id === parseInt(id));
+
+	if (index === -1) {
+		return 0;
+	}
+
+	todos[index].completed = !todos[index].completed;
+
+	await fs.writeFile(FILE_PATH, JSON.stringify(todos, null, 4));
+	return id;
+};
+
+module.exports = { getTodos, createTodo, deleteTodo, toggleTodo };
