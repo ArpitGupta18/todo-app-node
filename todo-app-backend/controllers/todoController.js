@@ -1,5 +1,6 @@
 const fs = require("fs").promises;
-const FILE_PATH = "./data/todos.json";
+const path = require("path");
+const FILE_PATH = path.join(__dirname, "../data/todos.json");
 
 const getTodos = async () => {
 	try {
@@ -9,6 +10,10 @@ const getTodos = async () => {
 		console.error("Error reading todos:", err);
 		return [];
 	}
+};
+
+const writeTodosToFile = (todos) => {
+	fs.writeFile(FILE_PATH, JSON.stringify(todos, null, 4));
 };
 
 const createTodo = async (newItem) => {
@@ -22,7 +27,7 @@ const createTodo = async (newItem) => {
 				completed: false,
 			},
 		];
-		await fs.writeFile(FILE_PATH, JSON.stringify(updatedTodos, null, 4));
+		await writeTodosToFile(updatedTodos);
 		return newItem;
 	} catch (err) {
 		console.error("Error creating todo:", err);
@@ -38,7 +43,7 @@ const deleteTodo = async (id) => {
 			return 0;
 		}
 
-		await fs.writeFile(FILE_PATH, JSON.stringify(updatedTodos, null, 4));
+		await writeTodosToFile(updatedTodos);
 		return id;
 	} catch (err) {
 		console.error("Error deleting todo:", err);
@@ -56,7 +61,7 @@ const toggleTodo = async (id) => {
 
 	todos[index].completed = !todos[index].completed;
 
-	await fs.writeFile(FILE_PATH, JSON.stringify(todos, null, 4));
+	await writeTodosToFile(todos);
 	return id;
 };
 
