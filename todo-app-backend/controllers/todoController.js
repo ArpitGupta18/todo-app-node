@@ -1,14 +1,19 @@
-const fs = require("fs").promises;
-const path = require("path");
-const FILE_PATH = path.join(__dirname, "../data/todos.json");
+const repo = require("../repositories/todoRepository");
 
-const getTodos = async () => {
+const getTodos = async (req, res) => {
 	try {
-		const data = await fs.readFile(FILE_PATH, "utf-8");
-		return JSON.parse(data);
+		let todos = await repo.getAllTodos();
+		const { search } = req.query;
+
+		if (search) {
+			todos = todos.filter((todo) =>
+				todo.task.toLowerCase().includes(search.toLowerCase())
+			);
+		}
+		res.status(200).json(todos);
 	} catch (err) {
-		console.error("Error reading todos:", err);
-		return [];
+		console.error("Error getting todos:", err);
+		res.status(500).json({ error: "Failed to fetch todos" });
 	}
 };
 
@@ -16,53 +21,42 @@ const writeTodosToFile = (todos) => {
 	fs.writeFile(FILE_PATH, JSON.stringify(todos, null, 4));
 };
 
-const createTodo = async (newItem) => {
+const createTodo = async (req, res) => {
 	try {
-		const todos = await getTodos();
-		const updatedTodos = [
-			...todos,
-			{
-				id: todos.length > 0 ? todos[todos.length - 1].id + 1 : 1,
-				...newItem,
-				completed: false,
-			},
-		];
-		await writeTodosToFile(updatedTodos);
-		return newItem;
+		const newItem = req.body;
+		const createdItem = repo.addTodo(newItem);
+		const created = await createdItem;
+		res.status(201).json(created);
 	} catch (err) {
-		console.error("Error creating todo:", err);
-		return null;
+		res.status(500).json({ error: "Failed to create todos" });
 	}
 };
 
-const deleteTodo = async (id) => {
+const deleteTodo = async (req, res) => {
 	try {
-		const todos = await getTodos();
-		const updatedTodos = todos.filter((todo) => todo.id !== parseInt(id));
-		if (updatedTodos.length === todos.length) {
-			return 0;
+		const { id } = req.params;
+		const deleted = await repo.removeTodo(id);
+		if (!deleted) {
+			return res.status(404).send({ Error: "Todo Not Found" });
 		}
-
-		await writeTodosToFile(updatedTodos);
-		return id;
+		res.status(204).send();
 	} catch (err) {
-		console.error("Error deleting todo:", err);
-		return null;
+		res.status(500).json({ error: "Failed to delete todo" });
 	}
 };
 
-const toggleTodo = async (id) => {
-	const todos = await getTodos();
-	const index = todos.findIndex((todo) => todo.id === parseInt(id));
+const toggleTodo = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const toggledTodo = await repo.toggleTodoStatus(id);
 
-	if (index === -1) {
-		return 0;
+		if (!toggledTodo) {
+			return res.status(404).send({ Error: "Todo Not Found" });
+		}
+		res.status(200).json({ message: "Todo toggled successfully" });
+	} catch (err) {
+		res.status(500).json({ error: "Failed to toggle todo" });
 	}
-
-	todos[index].completed = !todos[index].completed;
-
-	await writeTodosToFile(todos);
-	return id;
 };
 
 module.exports = { getTodos, createTodo, deleteTodo, toggleTodo };
