@@ -2,6 +2,7 @@ const express = require("express");
 const todoRoutes = require("./routes/todoRoutes.js");
 
 const app = express();
+app.use(express.json());
 
 app.get("/", (req, res) => {
 	res.send("Todo App");
