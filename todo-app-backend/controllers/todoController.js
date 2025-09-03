@@ -24,7 +24,22 @@ const writeTodosToFile = (todos) => {
 const createTodo = async (req, res) => {
 	try {
 		const newItem = req.body;
-		const createdItem = repo.addTodo(newItem);
+		const { task } = newItem;
+
+		if (!task || task.trim() === "") {
+			return res.status(400).json({ error: "Task cannot be empty" });
+		}
+
+		const todos = await repo.getAllTodos();
+
+		const exists = todos.some(
+			(t) => t.task.toLowerCase() === task.trim().toLowerCase()
+		);
+
+		if (exists) {
+			return res.status(400).json({ error: "Task already exists" });
+		}
+		const createdItem = repo.addTodo({ ...newItem, task: task.trim() });
 		const created = await createdItem;
 		res.status(201).json(created);
 	} catch (err) {
