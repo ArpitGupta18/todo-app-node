@@ -1,5 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 const FILE_PATH = path.join(__dirname, "../data/todos.json");
 
 const readTodos = async () => {
@@ -23,7 +24,7 @@ const getAllTodos = async () => {
 const addTodo = async (newItem) => {
 	const todos = await readTodos();
 	const newTodo = {
-		id: todos.length > 0 ? todos[todos.length - 1].id + 1 : 1,
+		id: uuidv4(),
 		...newItem,
 		completed: false,
 	};
@@ -34,7 +35,7 @@ const addTodo = async (newItem) => {
 
 const removeTodo = async (id) => {
 	const todos = await readTodos();
-	const updatedTodos = todos.filter((t) => t.id !== parseInt(id));
+	const updatedTodos = todos.filter((t) => t.id !== id);
 	if (updatedTodos.length === todos.length) {
 		return 0;
 	}
@@ -44,7 +45,7 @@ const removeTodo = async (id) => {
 
 const toggleTodoStatus = async (id) => {
 	const todos = await readTodos();
-	const index = todos.findIndex((t) => t.id === parseInt(id));
+	const index = todos.findIndex((t) => t.id === id);
 
 	if (index === -1) {
 		return null;
