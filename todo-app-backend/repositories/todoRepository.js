@@ -25,7 +25,9 @@ const addTodo = async (newItem) => {
 	const todos = await readTodos();
 	const newTodo = {
 		id: uuidv4(),
-		...newItem,
+		task: newItem.task,
+		dueDate: newItem.dueDate || null,
+		priority: newItem.priority || "medium",
 		completed: false,
 	};
 	todos.push(newTodo);

@@ -1,5 +1,9 @@
 const repo = require("../repositories/todoRepository");
 
+function isValidDate(d) {
+	return !isNaN(new Date(d).getTime());
+}
+
 const getTodos = async (req, res) => {
 	try {
 		let todos = await repo.getAllTodos();
@@ -17,31 +21,43 @@ const getTodos = async (req, res) => {
 	}
 };
 
-const writeTodosToFile = (todos) => {
-	fs.writeFile(FILE_PATH, JSON.stringify(todos, null, 4));
-};
-
 const createTodo = async (req, res) => {
 	try {
-		const newItem = req.body;
-		const { task } = newItem;
+		// const newItem = req.body;
+		const { task, dueDate, priority } = req.body;
 
 		if (!task || task.trim() === "") {
 			return res.status(400).json({ error: "Task cannot be empty" });
 		}
 
 		const todos = await repo.getAllTodos();
-
 		const exists = todos.some(
 			(t) => t.task.toLowerCase() === task.trim().toLowerCase()
 		);
-
 		if (exists) {
 			return res.status(400).json({ error: "Task already exists" });
 		}
-		const createdItem = repo.addTodo({ ...newItem, task: task.trim() });
-		const created = await createdItem;
-		res.status(201).json(created);
+
+		if (dueDate && !isValidDate(dueDate)) {
+			return res.status(400).json({ error: "Invalid due date" });
+		}
+
+		const allowedPriorities = ["low", "medium", "high"];
+		if (priority && !allowedPriorities.includes(priority.toLowerCase())) {
+			return res
+				.status(400)
+				.json({ error: "Priority must be low, medium or high" });
+		}
+
+		const createdItem = await repo.addTodo({
+			task: task.trim(),
+			dueDate: dueDate
+				? new Date(dueDate).toISOString().split("T")[0]
+				: null,
+			priority: priority ? priority.toLowerCase() : "medium",
+		});
+
+		res.status(201).json(createdItem);
 	} catch (err) {
 		res.status(500).json({ error: "Failed to create todos" });
 	}
