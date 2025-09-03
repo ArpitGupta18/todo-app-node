@@ -10,6 +10,14 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
 	const todos = await getTodos();
+	const { search } = req.query;
+
+	if (search) {
+		const filteredTodos = todos.filter((todo) =>
+			todo.task.toLowerCase().includes(search.toLowerCase())
+		);
+		return res.status(200).json(filteredTodos);
+	}
 	res.status(200).json(todos);
 });
 

@@ -17,7 +17,7 @@ const createTodo = async (newItem) => {
 		const updatedTodos = [
 			...todos,
 			{
-				id: todos[todos.length - 1].id + 1,
+				id: todos.length > 0 ? todos[todos.length - 1].id + 1 : 1,
 				...newItem,
 				completed: false,
 			},
