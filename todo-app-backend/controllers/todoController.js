@@ -7,7 +7,7 @@ function isValidDate(d) {
 const getTodos = async (req, res) => {
 	try {
 		let todos = await repo.getAllTodos();
-		const { search, page = 1, limit = 5 } = req.query;
+		const { search, page = 1, limit = 8 } = req.query;
 
 		if (search) {
 			todos = todos.filter((todo) =>
