@@ -7,14 +7,29 @@ function isValidDate(d) {
 const getTodos = async (req, res) => {
 	try {
 		let todos = await repo.getAllTodos();
-		const { search } = req.query;
+		const { search, page = 1, limit = 5 } = req.query;
 
 		if (search) {
 			todos = todos.filter((todo) =>
 				todo.task.toLowerCase().includes(search.toLowerCase())
 			);
 		}
-		res.status(200).json(todos);
+
+		const pageNum = parseInt(page);
+		const limitNum = parseInt(limit);
+
+		const startIndex = (pageNum - 1) * limitNum;
+		const endIndex = pageNum * limitNum;
+
+		const paginatedTodos = todos.slice(startIndex, endIndex);
+
+		res.status(200).json({
+			page: pageNum,
+			limit: limitNum,
+			totalTodos: todos.length,
+			totalPages: Math.ceil(todos.length / limitNum),
+			todos: paginatedTodos,
+		});
 	} catch (err) {
 		console.error("Error getting todos:", err);
 		res.status(500).json({ error: "Failed to fetch todos" });
@@ -84,7 +99,10 @@ const toggleTodo = async (req, res) => {
 		if (!toggledTodo) {
 			return res.status(404).send({ Error: "Todo Not Found" });
 		}
-		res.status(200).json({ message: "Todo toggled successfully" });
+		res.status(200).json({
+			message: "Todo toggled successfully",
+			task: toggledTodo,
+		});
 	} catch (err) {
 		res.status(500).json({ error: "Failed to toggle todo" });
 	}
