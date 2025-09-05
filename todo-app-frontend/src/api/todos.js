@@ -7,6 +7,7 @@ export const getTodos = async (page = 1, limit = 8, search = "") => {
 	}
 
 	const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
+
 	if (!response.ok) {
 		throw new Error("Failed to fetch todos");
 	}
@@ -24,6 +25,7 @@ export const addTodo = async (todo) => {
 		},
 		body: JSON.stringify(todo),
 	});
+
 	if (!response.ok) {
 		throw new Error("Failed to add todo");
 	}

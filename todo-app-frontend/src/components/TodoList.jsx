@@ -3,7 +3,7 @@ import { getTodos, deleteTodo, toggleTodoStatus, addTodo } from "../api/todos";
 import TodoItem from "./TodoItem";
 import TodoForm from "./TodoForm";
 import { FaSearch } from "react-icons/fa";
-
+import { toast } from "react-toastify";
 const TodoList = () => {
 	const [todos, setTodos] = useState([]);
 	const [page, setPage] = useState(1);
@@ -50,7 +50,15 @@ const TodoList = () => {
 			setTodos((prev) => [addedTodo, ...prev]);
 			setIsDrawerOpen(false);
 		} catch (error) {
-			console.error("Error adding todo:", error);
+			if (
+				error.response &&
+				error.response.data &&
+				error.response.data.error
+			) {
+				toast.error(error.response.data.error);
+			} else {
+				toast.error("Error adding todo.");
+			}
 		}
 	};
 

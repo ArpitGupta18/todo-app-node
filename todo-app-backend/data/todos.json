@@ -1,72 +1,72 @@
 [
-    {
-        "id": "f556a4e4-4692-405c-a233-9d2f61b41f87",
-        "task": "Buy Groceries",
-        "dueDate": "2025-09-10",
-        "priority": "low",
-        "completed": true
-    },
-    {
-        "id": "4af66202-f056-42a4-89a2-93ace7c5410f",
-        "task": "Book an appointment",
-        "dueDate": "2025-09-10",
-        "priority": "low",
-        "completed": false
-    },
-    {
-        "id": "ad3405b6-ba52-4e32-8511-43ea3f171462",
-        "task": "Task4",
-        "dueDate": "2025-09-10",
-        "priority": "low",
-        "completed": true
-    },
-    {
-        "id": "4979d485-76a4-4d25-9000-30f58b387d5a",
-        "task": "Task5",
-        "dueDate": "2025-09-10",
-        "priority": "medium",
-        "completed": false
-    },
-    {
-        "id": "ef458ab6-c580-4614-b695-0ecdfaa35ffe",
-        "task": "Task8",
-        "dueDate": "2025-09-10",
-        "priority": "medium",
-        "completed": false
-    },
-    {
-        "id": "bb80758a-1a59-4b47-ad0f-5883a12257fc",
-        "task": "Task9",
-        "dueDate": "2025-09-10",
-        "priority": "high",
-        "completed": false
-    },
-    {
-        "id": "ed932c52-2e42-499c-88d5-d0c11b4a8366",
-        "task": "Task7",
-        "dueDate": "2025-09-10",
-        "priority": "high",
-        "completed": false
-    },
-    {
-        "id": "506d9e06-b2fa-493a-912a-e39cf54a1daf",
-        "task": "Task6",
-        "dueDate": "2025-09-10",
-        "priority": "high",
-        "completed": false
-    },
-    {
-        "id": "9656e139-3a0e-4b5b-b92a-f0ac9e096d15",
-        "task": "Task1",
-        "dueDate": "2025-09-10",
-        "priority": "medium",
-        "completed": false
-    },
-    {
-        "id": "9c2782af-a889-4d70-aa82-706c5263eff4",
-        "task": "Task2",
-        "dueDate": "2025-09-10",
-        "priority": "high",
-        "completed": false
-    }
+	{
+		"id": "f556a4e4-4692-405c-a233-9d2f61b41f87",
+		"task": "Buy Groceries",
+		"dueDate": "2025-09-10",
+		"priority": "low",
+		"completed": true
+	},
+	{
+		"id": "4af66202-f056-42a4-89a2-93ace7c5410f",
+		"task": "Book an appointment",
+		"dueDate": "2025-09-10",
+		"priority": "low",
+		"completed": false
+	},
+	{
+		"id": "ad3405b6-ba52-4e32-8511-43ea3f171462",
+		"task": "Do Laundry",
+		"dueDate": "2025-09-10",
+		"priority": "low",
+		"completed": true
+	},
+	{
+		"id": "4979d485-76a4-4d25-9000-30f58b387d5a",
+		"task": "Finish Project Report",
+		"dueDate": "2025-09-10",
+		"priority": "medium",
+		"completed": false
+	},
+	{
+		"id": "ef458ab6-c580-4614-b695-0ecdfaa35ffe",
+		"task": "Prepare Presentation",
+		"dueDate": "2025-09-10",
+		"priority": "medium",
+		"completed": false
+	},
+	{
+		"id": "bb80758a-1a59-4b47-ad0f-5883a12257fc",
+		"task": "Pay Electricity Bill",
+		"dueDate": "2025-09-10",
+		"priority": "high",
+		"completed": false
+	},
+	{
+		"id": "ed932c52-2e42-499c-88d5-d0c11b4a8366",
+		"task": "Call Mom",
+		"dueDate": "2025-09-10",
+		"priority": "high",
+		"completed": false
+	},
+	{
+		"id": "506d9e06-b2fa-493a-912a-e39cf54a1daf",
+		"task": "Submit Tax Documents",
+		"dueDate": "2025-09-10",
+		"priority": "high",
+		"completed": false
+	},
+	{
+		"id": "9656e139-3a0e-4b5b-b92a-f0ac9e096d15",
+		"task": "Clean the Kitchen",
+		"dueDate": "2025-09-10",
+		"priority": "medium",
+		"completed": false
+	},
+	{
+		"id": "9c2782af-a889-4d70-aa82-706c5263eff4",
+		"task": "Attend Team Meeting",
+		"dueDate": "2025-09-10",
+		"priority": "high",
+		"completed": false
+	}
 ]

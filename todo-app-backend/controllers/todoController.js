@@ -50,7 +50,7 @@ const createTodo = async (req, res) => {
 			(t) => t.task.toLowerCase() === task.trim().toLowerCase()
 		);
 		if (exists) {
-			return res.status(400).json({ error: "Task already exists" });
+			return res.status(409).json({ error: "Task already exists" });
 		}
 
 		if (dueDate && !isValidDate(dueDate)) {
